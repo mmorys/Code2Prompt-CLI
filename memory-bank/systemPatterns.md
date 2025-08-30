@@ -1,52 +1,50 @@
 # System Patterns
 
-## Architecture Overview
+## Current Architecture Overview
+code2prompt-cli is a Python CLI application that will integrate with the code2prompt-rs library (Rust-based) to provide codebase-to-LLM prompt generation functionality.
 
-code2prompt-cli follows a command-line interface (CLI) architecture pattern, designed as a Python application that processes command-line arguments and generates structured output for LLM consumption.
+## Planned Technical Decisions
+1. **CLI Framework**: Click for command-line argument parsing
+2. **Core Integration**: Direct integration with code2prompt-rs Python bindings
+3. **Clipboard Handling**: Cross-platform clipboard library (pyperclip or similar)
+4. **File System Operations**: Standard Python libraries (pathlib, os)
+5. **Git Integration**: GitPython or subprocess calls for git operations
 
-## Key Technical Decisions
-
-1. **CLI-First Design**: Pure command-line interface with no GUI components
-2. **Python SDK Integration**: Leverages the code2prompt Python SDK for core functionality
-3. **Clipboard Integration**: Automatic clipboard copying for seamless workflow
-4. **Flexible Output Formats**: Support for markdown, JSON, and XML output formats
-5. **Git Integration**: Built-in support for git diffs and logs
-
-## Design Patterns in Use
-
+## Design Patterns to Implement
 ### Command Pattern
-- Central CLI command (`c2p`) that processes user prompts and options
+- Central CLI command that processes user input and orchestrates functionality
 - Clear separation between command parsing and business logic
 
-### Builder Pattern
+### Builder Pattern  
 - Incremental construction of prompts with various context elements
 - Flexible inclusion/exclusion of codebase elements
 
-### Template Pattern
-- Support for custom Handlebars templates
-- Default template structure with extensibility
+### Strategy Pattern
+- Different output format strategies (markdown, JSON, XML)
+- Template-based prompt generation strategies
 
-## Component Relationships
-
+## Planned Component Relationships
 ```
-User Input (CLI Args) → Command Parser → Context Generator → Prompt Builder → Output Handler
-                                    ↓
-                            Code2Prompt SDK
+User Input (CLI Args) → Command Parser → Context Filter → Prompt Builder → Output Handler
+                                    ↓              ↓
+                            Code2Prompt-rs    Clipboard/Git
 ```
 
-## Critical Implementation Paths
+## Implementation Phases
+1. **Phase 1**: Basic CLI structure with argument parsing
+2. **Phase 2**: Integration with code2prompt-rs library
+3. **Phase 3**: File filtering and context assembly
+4. **Phase 4**: Prompt generation and output handling
+5. **Phase 5**: Advanced features (clipboard, git, templates)
 
-1. **Command Line Parsing**: Processing user options and arguments
-2. **Codebase Analysis**: Scanning and filtering files based on patterns
-3. **Context Assembly**: Combining file contents, directory trees, and metadata
-4. **Prompt Generation**: Structuring output with LLM instructions
-5. **Output Delivery**: Clipboard copying and file output options
-
-## Data Flow
-
-1. User executes `c2p` with options and prompt
+## Data Flow (Planned)
+1. User executes `code2prompt-cli` with options and path
 2. CLI parses arguments and validates input
 3. File system is scanned based on include/exclude patterns
-4. Codebase context is assembled (files, tree structure, git info)
+4. Codebase context is assembled using code2prompt-rs
 5. Prompt is generated with user instructions and code context
 6. Output is delivered to clipboard and/or file
+
+## Current Implementation Status
+- **Phase 1**: Not started - only basic package structure exists
+- **All other phases**: Pending implementation

@@ -1,7 +1,7 @@
 [project]
 name = "code2prompt-cli"
 version = "0.1.0"
-description = "Add your description here"
+description = "A CLI tool to generate LLM prompts from codebase context using code2prompt"
 readme = "README.md"
 authors = [
     { name = "Marcin Morys", email = "marcin.m.morys@gmail.com" }
@@ -9,11 +9,20 @@ authors = [
 requires-python = ">=3.12"
 dependencies = [
     "code2prompt-rs>=3.2.1",
+    "click>=8.1.0",
+    "pyperclip>=1.8.0",
+    "GitPython>=3.1.0",
+    "Jinja2>=3.1.0",
 ]
 
 [project.scripts]
-code2prompt-cli = "code2prompt_cli:main"
+code2prompt-cli = "code2prompt_cli.main:main"
 
 [build-system]
-requires = ["uv_build>=0.8.14,<0.9.0"]
-build-backend = "uv_build"
+requires = ["hatchling", "wheel"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.1",
+]

@@ -1,2 +1,3 @@
-def main() -> None:
-    print("Hello from code2prompt-cli!")
+from .main import main
+
+__all__ = ['main']

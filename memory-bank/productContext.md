@@ -1,31 +1,33 @@
 # Product Context
 
-## Purpose
+## What This Project Is
+code2prompt-cli is a command-line tool designed to bridge the gap between local codebases and Large Language Model (LLM) chat interfaces. It generates structured, copyable prompts that contain relevant code context, enabling developers to efficiently leverage LLMs for code-related tasks.
 
-code2prompt-cli exists to solve the problem of efficiently providing codebase context to Large Language Models (LLMs) through chat interfaces without requiring API keys or direct API access. It bridges the gap between local codebases and LLM capabilities by generating structured prompts that include relevant code context.
+## Problems It Solves
+1. **Manual Context Preparation**: Developers currently spend time manually copying and formatting code snippets for LLM queries
+2. **Inefficient Workflow**: Switching between code editors and LLM chat interfaces breaks flow state
+3. **Context Management**: Difficulty in selecting and presenting relevant code context to LLMs
+4. **Repetitive Tasks**: Common coding questions require similar context patterns
 
-## Problem Statement
-
-Developers frequently need to ask LLMs questions about their codebases, but manually copying and pasting code fragments is inefficient and error-prone. Existing solutions often require API keys, complex setup, or don't provide adequate context structure for LLMs to understand the codebase effectively.
-
-## Solution Approach
-
-code2prompt-cli generates comprehensive LLM prompts that include:
-- Structured codebase context with file trees and contents
-- High-level instructions for LLM usage
-- Flexible filtering and formatting options
-- Direct clipboard integration for seamless workflow
+## How It Should Work
+1. **Command-Line Execution**: `code2prompt-cli [options] [path]`
+2. **Flexible Filtering**: Include/exclude files via glob patterns and .gitignore integration
+3. **Clipboard Integration**: Automatic copying of generated prompts to clipboard
+4. **Structured Output**: Well-formatted prompts ready for LLM consumption
+5. **Cross-Platform**: Consistent behavior on Windows and Linux
 
 ## User Experience Goals
+- **Intuitive**: Simple commands with sensible defaults
+- **Efficient**: Fast execution and minimal configuration
+- **Flexible**: Powerful filtering and customization options
+- **Reliable**: Consistent cross-platform behavior
+- **Seamless**: Integrates naturally into development workflows
 
-1. **Simplicity**: Single command execution with intuitive options
-2. **Flexibility**: Comprehensive filtering, inclusion/exclusion patterns, and output formats
-3. **Efficiency**: Fast generation and automatic clipboard copying
-4. **Context Awareness**: Smart handling of git diffs, line numbers, and directory structures
-5. **Integration**: Seamless workflow with existing LLM chat interfaces
+## Current State
+The project is in early development with only a basic skeleton implemented. The core functionality needs to be built to match these product requirements.
 
-## Target Users
-
-- Software developers working with LLMs for code assistance
-- Teams wanting to leverage LLMs without complex API setups
-- Developers needing quick codebase context generation for documentation or analysis
+## Success Metrics
+- Reduces time spent preparing LLM prompts from codebases
+- Increases developer efficiency in LLM-assisted coding tasks
+- Provides reliable cross-platform clipboard integration
+- Offers flexible codebase filtering and inclusion options
