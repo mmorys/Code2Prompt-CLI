@@ -13,7 +13,7 @@ from pathlib import Path
 from typing import List, Optional
 
 try:
-    from code2prompt_rs import generate_prompt
+    from code2prompt_rs import Code2Prompt
     CODE2PROMPT_AVAILABLE = True
 except ImportError:
     CODE2PROMPT_AVAILABLE = False
@@ -134,11 +134,10 @@ def main(
     # Generate prompt using code2prompt-rs
     try:
         if CODE2PROMPT_AVAILABLE:
-            # This is where we would call the actual code2prompt-rs library
-            # For now, we'll simulate the output
-            result = _generate_mock_prompt(codebase_path, prompt_text, options)
+            result = _generate_real_prompt(codebase_path, prompt_text, options)
         else:
-            result = _generate_mock_prompt(codebase_path, prompt_text, options)
+            click.echo("Error: code2prompt-rs is not available. Please install it to use this tool.")
+            sys.exit(1)
         
         # Handle output
         if output_file:
@@ -161,37 +160,51 @@ def main(
         click.echo(f"Error generating prompt: {e}")
         sys.exit(1)
 
-def _generate_mock_prompt(codebase_path: Path, prompt_text: Optional[str], options: dict) -> str:
+def _generate_real_prompt(codebase_path: Path, prompt_text: Optional[str], options: dict) -> str:
     """
-    Generate a mock prompt for demonstration purposes.
-    This will be replaced with actual code2prompt-rs integration.
+    Generate a real prompt using the code2prompt-rs library.
+    
+    Args:
+        codebase_path: Path to the codebase directory
+        prompt_text: Optional user prompt text
+        options: Dictionary of options from CLI arguments
+        
+    Returns:
+        Generated prompt string
     """
-    prompt_parts = []
-    
-    if options.get('full_directory_tree'):
-        prompt_parts.append(f"## Directory Tree for {codebase_path}\n")
-        prompt_parts.append("```\n")
-        for root, dirs, files in os.walk(codebase_path):
-            level = root.replace(str(codebase_path), '').count(os.sep)
-            indent = ' ' * 2 * level
-            prompt_parts.append(f"{indent}{os.path.basename(root)}/\n")
-            subindent = ' ' * 2 * (level + 1)
-            for file in files:
-                prompt_parts.append(f"{subindent}{file}\n")
-        prompt_parts.append("```\n")
-    
-    prompt_parts.append("## Codebase Context\n")
-    prompt_parts.append("This is a mock implementation. In the full version, this would contain actual code context.\n\n")
-    
-    if prompt_text:
-        prompt_parts.append("## User Request\n")
-        prompt_parts.append(f"{prompt_text}\n\n")
-    
-    prompt_parts.append("## Instructions for LLM\n")
-    prompt_parts.append("Please analyze the codebase context above and respond to the user request.\n")
-    prompt_parts.append("If you need additional context or clarification, please ask the user.\n")
-    
-    return ''.join(prompt_parts)
+    try:
+        # Map CLI options to code2prompt-rs parameters
+        c2p_options = {
+            'path': str(codebase_path),
+            'include_patterns': options.get('include_patterns', []),
+            'exclude_patterns': options.get('exclude_patterns', []),
+            'include_priority': options.get('include_priority', False),
+            'line_numbers': options.get('line_numbers', False),
+            'absolute_paths': options.get('absolute_paths', False),
+            'full_directory_tree': options.get('full_directory_tree', False),
+            'code_blocks': not options.get('no_codeblock', False),
+            'follow_symlinks': options.get('follow_symlinks', False),
+            'include_hidden': options.get('hidden', False),
+        }
+        
+        # Create Code2Prompt instance
+        c2p = Code2Prompt(**c2p_options)
+        
+        # Generate prompt with optional template
+        template_path = options.get('template_path')
+        rendered_prompt = c2p.generate(template=template_path)
+        
+        # Extract the actual prompt content
+        result = rendered_prompt.prompt
+        
+        # Add user prompt text if provided
+        if prompt_text:
+            result = f"{result}\n\n## User Request\n{prompt_text}\n\n## Instructions for LLM\nPlease analyze the codebase context above and respond to the user request.\nIf you need additional context or clarification, please ask the user."
+        
+        return result
+        
+    except Exception as e:
+        raise Exception(f"Error generating prompt with code2prompt-rs: {str(e)}")
 
 if __name__ == '__main__':
     main()

@@ -16,7 +16,7 @@ def test_cli_with_prompt():
         result = runner.invoke(main, ['--path', '.', 'Analyze this code'])
         assert result.exit_code == 0
         assert 'Generating prompt for codebase' in result.output
-        assert 'Codebase Context' in result.output
+        assert 'Source Tree' in result.output
         assert 'User Request' in result.output
 
 def test_cli_with_output_file():
