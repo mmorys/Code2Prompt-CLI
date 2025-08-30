@@ -1,0 +1,19 @@
+[project]
+name = "code2prompt-cli"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Marcin Morys", email = "marcin.m.morys@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "code2prompt-rs>=3.2.1",
+]
+
+[project.scripts]
+code2prompt-cli = "code2prompt_cli:main"
+
+[build-system]
+requires = ["uv_build>=0.8.14,<0.9.0"]
+build-backend = "uv_build"
