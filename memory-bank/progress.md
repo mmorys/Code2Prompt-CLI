@@ -51,6 +51,27 @@
 - ✅ All CLI structure and argument handling is working
 - ✅ Real code2prompt-rs integration is functional
 
+## Options with Incomplete Implementation
+Based on unit test analysis, the following CLI options appear to not be completely implemented or fully functional:
+
+### Output Format Options
+- `--output-format json`: Implementation may not be fully complete
+- `--output-format xml`: Implementation may not be fully complete
+
+### Display Options  
+- `--no-codeblock`: Implementation may not be fully complete
+- `--no-clipboard`: Implementation may not be fully complete
+
+### Git Integration Options
+- `--diff`: Implementation may have issues
+- `--git-diff-branch`: Implementation may have issues
+- `--git-log-branch`: Implementation may have issues
+
+### Template Option
+- `--template`: Implementation may have issues
+
+These options have tests that are written defensively (checking for basic execution rather than specific functionality) or use broader exit code ranges, suggesting the underlying implementation may not be fully complete or stable yet.
+
 ## Evolution of Project Decisions
 - **Realization**: Project is much earlier in development than Memory Bank initially assumed
 - **Adjustment**: Focus shifted from enhancement to core implementation
