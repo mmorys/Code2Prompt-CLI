@@ -198,6 +198,7 @@ def _generate_real_prompt(codebase_path: Path, prompt_text: Optional[str], optio
         result = rendered_prompt.prompt
         
         # Add user prompt text if provided
+        # TODO: format the prompt using the appropriate format (Markdown, format, or XML) accodring to the output-format setting from the CLI
         if prompt_text:
             result = f"{result}\n\n## User Request\n{prompt_text}\n\n## Instructions for LLM\nPlease analyze the codebase context above and respond to the user request.\nIf you need additional context or clarification, please ask the user."
         
