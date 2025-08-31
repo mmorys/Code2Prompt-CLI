@@ -17,7 +17,11 @@
 code2prompt-cli/
 ├── src/
 │   └── code2prompt_cli/
-│       └── __init__.py (current minimal implementation)
+│       ├── __init__.py (fully implemented)
+│       └── main.py (complete CLI implementation)
+├── tests/
+│   ├── test_cli.py
+│   └── test_integration.py
 ├── memory-bank/
 ├── pyproject.toml
 └── README.md
@@ -52,17 +56,18 @@ code2prompt-cli/
 4. **Security**: Safe handling of file system operations
 5. **Clipboard Access**: Reliable cross-platform clipboard integration
 
-## Planned Dependencies
-### Runtime Dependencies (To Be Added)
-- click (CLI framework)
-- pyperclip (clipboard handling)
-- GitPython (git integration)
-- Jinja2 (templating)
+## Current Dependencies
+### Runtime Dependencies (Implemented)
+- click (CLI framework) - ✅ Integrated
+- pyperclip (clipboard handling) - ✅ Working
+- GitPython (git integration) - ✅ Available
+- Jinja2 (templating) - ✅ Available
+- code2prompt-rs (core functionality) - ✅ Integrated
 
-### Development Dependencies (To Be Added)
-- pytest (testing)
-- ruff (linting)
-- pyright (type checking)
+### Development Dependencies (Installed)
+- pytest (testing) - ✅ Working
+- ruff (linting) - Available via uv
+- pyright (type checking) - Available via uv
 
 ### Modifying Dependencies
 
@@ -77,14 +82,14 @@ Never modify the `pyproject.toml` directly to add or remove dependencies. Always
 All shell command will be run through `uv`. This will ensure that the project environment is active. For example, to run pytest, use `uv run pytest`. To run a CLI command code2prompt_cli, run `uv run code2prompt_cli`.
 
 ## Current Implementation Status
-- **Package Structure**: Basic skeleton exists
-- **Dependencies**: Only code2prompt-rs currently specified
-- **Entry Point**: Configured but minimal implementation
-- **CLI Framework**: Not yet integrated
+- **Package Structure**: Complete with full CLI implementation
+- **Dependencies**: All planned dependencies integrated and working
+- **Entry Point**: Fully implemented with complete functionality
+- **CLI Framework**: Click fully integrated and functional
 
-## Development Workflow (Planned)
-1. Implement CLI argument parsing with Click
-2. Integrate code2prompt-rs functionality
-3. Add file filtering and context assembly
-4. Implement output generation and clipboard integration
-5. Add testing and documentation
+## Development Workflow (Completed)
+1. ✅ Implement CLI argument parsing with Click
+2. ✅ Integrate code2prompt-rs functionality
+3. ✅ Add file filtering and context assembly
+4. ✅ Implement output generation and clipboard integration
+5. ✅ Add testing and documentation
